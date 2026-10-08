@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>THE SKILLS MILLIONAIRE 🎯💰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="bg-stage">
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="bg-glow glow-3"></div>
+  <div class="stars"></div>
+</div>
+
+<button id="langToggle" class="lang-toggle" title="Change language / Mudar idioma">
+  <span class="flag" id="langFlag">🇺🇸</span> <span id="langLabel">EN</span>
+</button>
+
+<!-- ========== SCREEN 1: INTRO / SETUP ========== -->
+<section id="screen-intro" class="screen active">
+  <div class="intro-box">
+    <div class="trophy-emoji">🏆💰</div>
+    <h1 class="game-title">
+      <span class="title-line">THE SKILLS</span>
+      <span class="title-line gold">MILLIONAIRE</span>
+    </h1>
+    <p class="subtitle">Hard Skills vs Soft Skills</p>
+
+    <!-- SETUP PANEL -->
+    <div class="setup-panel">
+      <div class="setup-row">
+        <label class="setup-label" data-en="Number of questions" data-pt="Número de perguntas">Number of questions</label>
+        <div class="setup-options" id="qtyOptions">
+          <button class="opt-btn active" data-qty="6">6</button>
+          <button class="opt-btn" data-qty="10">10</button>
+          <button class="opt-btn" data-qty="15">15</button>
+          <button class="opt-btn" data-qty="20">20</button>
+        </div>
+      </div>
+
+      <div class="setup-row">
+        <label class="setup-label" data-en="Timer per question" data-pt="Tempo por pergunta">Timer per question</label>
+        <div class="setup-options" id="timerOptions">
+          <button class="opt-btn" data-timer="0" data-en="OFF" data-pt="OFF">OFF</button>
+          <button class="opt-btn active" data-timer="30">30s</button>
+          <button class="opt-btn" data-timer="45">45s</button>
+          <button class="opt-btn" data-timer="60">60s</button>
+        </div>
+      </div>
+
+      <div class="setup-row">
+        <label class="setup-label" data-en="Lifelines (per team)" data-pt="Ajudas (por time)">Lifelines (per team)</label>
+        <div class="setup-options" id="lifelineOptions">
+          <button class="opt-btn active" data-lifelines="1" data-en="1 each" data-pt="1 cada">1 each</button>
+          <button class="opt-btn" data-lifelines="2" data-en="2 each" data-pt="2 cada">2 each</button>
+          <button class="opt-btn" data-lifelines="0" data-en="OFF" data-pt="OFF">OFF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-preview">
+      <div class="team-chip team-a-chip">🔵 TEAM A</div>
+      <div class="vs">VS</div>
+      <div class="team-chip team-b-chip">🟣 TEAM B</div>
+    </div>
+
+    <button id="startBtn" class="btn-primary">
+      <span data-en="START GAME" data-pt="COMEÇAR JOGO">START GAME</span>
+    </button>
+
+    <button id="printBtn" class="btn-ghost" data-en="🖨️ Print all questions" data-pt="🖨️ Imprimir todas as perguntas">🖨️ Print all questions</button>
+  </div>
+</section>
+
+<!-- ========== SCREEN 2: TEAM SELECT ========== -->
+<section id="screen-team-select" class="screen">
+  <div class="team-select-box">
+    <div class="q-counter-big">
+      <span data-en="QUESTION" data-pt="PERGUNTA">QUESTION</span>
+      <span class="q-number-big" id="selQNumber">1</span>
+      <span class="q-total-big" id="selQTotal">/ 6</span>
+    </div>
+
+    <h2 class="select-title" data-en="WHO ANSWERS THIS QUESTION?" data-pt="QUEM RESPONDE ESTA PERGUNTA?">WHO ANSWERS THIS QUESTION?</h2>
+
+    <div class="select-teams">
+      <button class="select-team-btn team-a-btn" data-team="A">
+        <div class="st-icon">🔵</div>
+        <div class="st-name">TEAM A</div>
+        <div class="st-score">
+          <span data-en="Score" data-pt="Pontos">Score</span>: <strong id="selScoreA">0</strong>
+        </div>
+      </button>
+
+      <button class="select-team-btn team-b-btn" data-team="B">
+        <div class="st-icon">🟣</div>
+        <div class="st-name">TEAM B</div>
+        <div class="st-score">
+          <span data-en="Score" data-pt="Pontos">Score</span>: <strong id="selScoreB">0</strong>
+        </div>
+      </button>
+    </div>
+
+    <button id="backToIntroBtn" class="btn-ghost small" data-en="← Back" data-pt="← Voltar">← Back</button>
+  </div>
+</section>
+
+<!-- ========== SCREEN 3: GAME ========== -->
+<section id="screen-game" class="screen">
+
+  <header class="scoreboard">
+    <div class="score-box team-a" id="scoreABox">
+      <div class="team-label">🔵 TEAM A</div>
+      <div class="team-score" id="scoreAValue">0</div>
+      <div class="team-points" data-en="points" data-pt="pontos">points</div>
+      <div class="lifelines" id="lifelinesA"></div>
+    </div>
+
+    <div class="center-info">
+      <div class="q-counter">
+        <span data-en="QUESTION" data-pt="PERGUNTA">QUESTION</span>
+        <span class="q-number" id="qNumber">1</span>
+        <span class="q-total" id="qTotal">/ 6</span>
+      </div>
+      <div class="prize-ladder" id="prizeLadder"></div>
+      <div class="timer-ring" id="timerRing">
+        <svg viewBox="0 0 100 100">
+          <circle class="timer-track" cx="50" cy="50" r="42"></circle>
+          <circle class="timer-progress" id="timerProgress" cx="50" cy="50" r="42"></circle>
+        </svg>
+        <div class="timer-text" id="timerText">30</div>
+      </div>
+    </div>
+
+    <div class="score-box team-b" id="scoreBBox">
+      <div class="team-label">🟣 TEAM B</div>
+      <div class="team-score" id="scoreBValue">0</div>
+      <div class="team-points" data-en="points" data-pt="pontos">points</div>
+      <div class="lifelines" id="lifelinesB"></div>
+    </div>
+  </header>
+
+  <div class="turn-banner" id="turnBanner">
+    <span data-en="NOW PLAYING:" data-pt="JOGANDO AGORA:">NOW PLAYING:</span>
+    <strong id="turnTeamName">TEAM A</strong>
+  </div>
+
+  <div class="difficulty-tag" id="difficultyTag">EASY</div>
+
+  <main class="question-area">
+    <div class="question-box" id="questionBox">
+      <p class="question-text" id="questionText">Loading...</p>
+    </div>
+
+    <div class="answers-grid" id="answersGrid">
+      <button class="answer-btn" data-letter="A"><span class="letter">A</span><span class="answer-text"></span></button>
+      <button class="answer-btn" data-letter="B"><span class="letter">B</span><span class="answer-text"></span></button>
+      <button class="answer-btn" data-letter="C"><span class="letter">C</span><span class="answer-text"></span></button>
+      <button class="answer-btn" data-letter="D"><span class="letter">D</span><span class="answer-text"></span></button>
+    </div>
+
+    <!-- Lifeline buttons -->
+    <div class="lifeline-bar" id="lifelineBar">
+      <button class="lifeline-btn" id="ll50" title="Remove 2 wrong answers">
+        <span class="ll-icon">✂️</span>
+        <span class="ll-label" data-en="50:50" data-pt="Eliminar 2">50:50</span>
+        <span class="ll-count" id="ll50Count">1</span>
+      </button>
+      <button class="lifeline-btn" id="llSkip" title="Skip this question">
+        <span class="ll-icon">⏭️</span>
+        <span class="ll-label" data-en="Skip" data-pt="Pular">Skip</span>
+        <span class="ll-count" id="llSkipCount">1</span>
+      </button>
+      <button class="lifeline-btn" id="llHint" title="Show a hint">
+        <span class="ll-icon">💡</span>
+        <span class="ll-label" data-en="Hint" data-pt="Dica">Hint</span>
+        <span class="ll-count" id="llHintCount">1</span>
+      </button>
+    </div>
+
+    <div class="hint-box hidden" id="hintBox">
+      <span class="hint-icon">💡</span>
+      <span id="hintText"></span>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button id="nextBtn" class="btn-next hidden">
+      <span data-en="NEXT →" data-pt="PRÓXIMA →">NEXT →</span>
+    </button>
+  </main>
+</section>
+
+<!-- ========== SCREEN 4: FINAL ========== -->
+<section id="screen-final" class="screen">
+  <div class="final-box">
+    <div class="trophy-big">🏆</div>
+    <h1 class="final-title" data-en="FINAL SCORE" data-pt="PONTUAÇÃO FINAL">FINAL SCORE</h1>
+
+    <div class="final-scores">
+      <div class="final-team team-a" id="finalTeamA">
+        <div class="final-label">🔵 TEAM A</div>
+        <div class="final-value" id="finalA">0</div>
+        <div class="final-points" data-en="points" data-pt="pontos">points</div>
+        <div class="final-stats" id="statsA"></div>
+      </div>
+      <div class="final-team team-b" id="finalTeamB">
+        <div class="final-label">🟣 TEAM B</div>
+        <div class="final-value" id="finalB">0</div>
+        <div class="final-points" data-en="points" data-pt="pontos">points</div>
+        <div class="final-stats" id="statsB"></div>
+      </div>
+    </div>
+
+    <div class="winner-banner" id="winnerBanner">
+      <div class="winner-title" data-en="🏆 WINNER!" data-pt="🏆 VENCEDOR!">🏆 WINNER!</div>
+      <div class="winner-name" id="winnerName">TEAM A</div>
+    </div>
+
+    <div class="final-actions">
+      <button id="restartBtn" class="btn-primary">
+        <span data-en="PLAY AGAIN" data-pt="JOGAR NOVAMENTE">PLAY AGAIN</span>
+      </button>
+      <button id="reviewBtn" class="btn-ghost" data-en="📋 Review answers" data-pt="📋 Revisar respostas">📋 Review answers</button>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+</section>
+
+<!-- Print overlay -->
+<div id="printArea" class="print-area"></div>
+
+<script src="questions.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
